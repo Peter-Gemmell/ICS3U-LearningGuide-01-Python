@@ -24,7 +24,7 @@ def game_scene():
 
     # repeat, game loop
     while True:
-        game.render_sprite([ship])
+        game.render_sprites([ship])
         game.tick()
 
 

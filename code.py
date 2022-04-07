@@ -42,7 +42,6 @@ def game_scene():
             ship.move(ship.x, ship.y - 1)
         if keys & ugame.K_DOWN:
             ship.move(ship.x, ship.y + 1)
-            
 
         game.render_sprites([ship])
         game.tick()

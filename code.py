@@ -8,38 +8,39 @@ import constants
 import stage
 import ugame
 
-def menu_scene(): 
-    # this function is the main game game_scene
 
-    # image banks for CircuitPython
-    image_bank_mt_background = stage.Bank.from_bmp16("mt_game_studio.bmp")
-    
-    
+def menu_scene():
+    # this function is the main menu scene
+
+    # image banks
+    image_bank_background = stage.Bank.from_bmp16("space_aliens_background.bmp")
+
     # add text objects
     text = []
-    text1 = stage.Text(width=29, height=12, font=None, palette =constants.RED_PALETTE, 
-    buffer = None)
+    text1 = stage.Text(
+        width=29, height=12, font=None, palette=constants.RED_PALETTE, buffer=None
+    )
     text1.move(20, 10)
-    text1.text("MT Game Studios!")
+    text1.text("MT Game Studios")
     text.append(text1)
-    
-    text2 = stage.Text(width=29, height=12, font=None, palette =constants.RED_PALETTE, 
-    buffer = None)
-    text2.move(40, 110)
-    text2.text("PRESS START!")
-    text.append(text2)
-    # sets the background to image 0
-    # and the size (10x8 titels of the size 16x16)
-    background = stage.Grid(image_bank_mt_background, constants.SCREEN_X,
-                            constants.SCREEN_Y)
 
-    # create a stage
-    # set frame rate to 60 fps
+    text2 = stage.Text(
+        width=29, height=12, font=None, palette=constants.RED_PALETTE, buffer=None
+    )
+    text2.move(40, 110)
+    text2.text("PRESS START")
+    text.append(text2)
+
+    # sets the background, 10x8
+    background = stage.Grid(
+        image_bank_background, constants.SCREEN_X, constants.SCREEN_Y
+    )
+
+    # creates a stage, sets to 60fps
     game = stage.Stage(ugame.display, constants.FPS)
-    # set the layter of all sprites to show up in order
+    # order of layers
     game.layers = text + [background]
-    # render all sprites
-    # most likely will only render background once per game scnece
+    # render the background and sprite list, most likely once per scene
     game.render_block()
 
     # repeat forever, game loop
@@ -50,8 +51,9 @@ def menu_scene():
         if keys & ugame.K_START != 0:
             game_scene()
 
-        #redraw Sprites
+        # redraw Sprites
         game.tick()
+
 
 def game_scene():
     # this function is the main game game_scene
@@ -65,7 +67,7 @@ def game_scene():
     start_button = constants.button_state["button_up"]
     select_button = constants.button_state["button_up"]
 
-    pew_sound = open("pew.wav", 'rb')
+    pew_sound = open("pew.wav", "rb")
     sound = ugame.audio
     sound.stop()
     sound.mute(False)
@@ -78,8 +80,11 @@ def game_scene():
     )
 
     alien = stage.Sprite(
-        image_bank_sprites, 9, int(constants.SCREEN_X / 2 - constants.SPRITE_SIZE / 2),
-    16)
+        image_bank_sprites,
+        9,
+        int(constants.SCREEN_X / 2 - constants.SPRITE_SIZE / 2),
+        16,
+    )
 
     # creates a stage, sets to 60fps
     game = stage.Stage(ugame.display, 60)
@@ -94,15 +99,15 @@ def game_scene():
         keys = ugame.buttons.get_pressed()
 
         if keys & ugame.K_O != 0:
-           if a_button == constants.button_state["button_up"]:
-            a_button = constants.button_state["button_just_pressed"]
-           elif a_button == constants.button_state["button_just_pressed"]:
-            a_button = constants.button_state["button_still_pressed"]
-            
+            if a_button == constants.button_state["button_up"]:
+                a_button = constants.button_state["button_just_pressed"]
+            elif a_button == constants.button_state["button_just_pressed"]:
+                a_button = constants.button_state["button_still_pressed"]
+
         else:
             if a_button == constants.button_state["button_still_pressed"]:
                 a_button = constants.button_state["button_released"]
-            else: 
+            else:
                 a_button = constants.button_state["button_up"]
 
         # A button to fire
@@ -133,12 +138,14 @@ def game_scene():
             ship.move(ship.x, ship.y + 1)
 
         # update game logic
+        # play sound on A being pressed
         if a_button == constants.button_state["button_just_pressed"]:
             sound.play(pew_sound)
+
         # redraw Sprites
         game.render_sprites([ship] + [alien])
         game.tick()  # wait until refresh rate finishes
 
 
 if __name__ == "__main__":
-    game_scene()
+    menu_scene()

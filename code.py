@@ -10,28 +10,30 @@ import ugame
 import time
 import random
 
+
 def splash_scene():
     # this function is the splash_scene
-    
+
     # get sound ready
-    coin_sound = open("coin.wav", 'rb')
+    coin_sound = open("coin.wav", "rb")
     sound = ugame.audio
     sound.stop()
     sound.mute(False)
     sound.play(coin_sound)
 
     image_bank_mt_background = stage.Bank.from_bmp16("mt_game_studio.bmp")
-    
-    background = stage.Grid(image_bank_mt_background, constants.SCREEN_X,
-                            constants.SCREEN_Y)
-# used this program to split the image into tile: 
+
+    background = stage.Grid(
+        image_bank_mt_background, constants.SCREEN_X, constants.SCREEN_Y
+    )
+    # used this program to split the image into tile:
     #   https://ezgif.com/sprite-cutter/ezgif-5-818cdbcc3f66.png
-   background.tile(2, 2, 0)  # blank white
-   background.tile(3, 2, 1)
-   background.tile(4, 2, 2)
-   background.tile(5, 2, 3)
-   background.tile(6, 2, 4)
-   background.tile(7, 2, 0)  # blank white
+    background.tile(2, 2, 0)  # blank white
+    background.tile(3, 2, 1)
+    background.tile(4, 2, 2)
+    background.tile(5, 2, 3)
+    background.tile(6, 2, 4)
+    background.tile(7, 2, 0)  # blank white
 
     background.tile(2, 3, 0)  # blank white
     background.tile(3, 3, 5)
@@ -67,8 +69,9 @@ def splash_scene():
         time.sleep(2.0)
         menu_scene()
 
-        #redraw Sprites
+        # redraw Sprites
         game.tick()
+
 
 def menu_scene():
     # this function is the main menu scene

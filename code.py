@@ -157,12 +157,12 @@ def game_scene():
     # render the background and sprite list, most likely once per scene
     game.render_block()
 
-    laser = []
+    lasers = []
     for laser_number in range(constants.TOTAL_NUMBER_OF_LASERS):
-        a_single_laser = stage.Sprite(image_bank.sprites, 10,
+        a_single_laser = stage.Sprite(image_bank_sprites, 10,
                                       constants.OFF_SCREEN_X,
                                       constants.OFF_SCREEN_Y)
-        laser.append(a_single_laser)
+        lasers.append(a_single_laser)
     
     game = stage.Stage(ugame.display, 60)
     game.layers = lasers + [ship] + [alien] + [background]
@@ -220,13 +220,13 @@ def game_scene():
                     sound.play(pew_sound)
                     break
 
-        for laser_number in range(len(laser)):
+        for laser_number in range(len(lasers)):
             if lasers[laser_number].x > 0:
-                laser[laser_number].move(lasers[laser_number].x,
+                lasers[laser_number].move(lasers[laser_number].x,
                                          lasers[laser_number].y - 
                                            constants.LASER_SPEED)
                 if lasers[laser_number].y < constants.OFF_TOP_SCREEN:
-                    laser[laser_number].move(constants.OFF_SCREEN_X
+                    lasers[laser_number].move(constants.OFF_SCREEN_X,
                                              constants.OFF_SCREEN_Y)
 
         # redraw Sprites

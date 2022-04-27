@@ -121,7 +121,13 @@ def menu_scene():
 
 def game_scene():
     # this function is the main game game_scene
-
+    def show_alien():
+        for alien_number in range(len(aliens)):
+            if aliens[alien_number].x < 0:
+                aliens[alien_number].move(random.radint(0 + constants.SPRITE_SIZE,
+                                                        constants.SCREEN_X - constants.SPRITE_SIZE),
+                                          constants.OFF_TOP_SCREEN)
+                                          
     # image banks
     image_bank_background = stage.Bank.from_bmp16("space_aliens_background.bmp")
     image_bank_sprites = stage.Bank.from_bmp16("space_aliens.bmp")
@@ -167,6 +173,17 @@ def game_scene():
     game = stage.Stage(ugame.display, 60)
     game.layers = lasers + [ship] + [alien] + [background]
 
+    aliens = []
+    for alien_number in range(constants.TOTAL_NUMBER_OF_ALIENS):
+        a_single_alien = stage.Sprite(image_bank_sprites, 9,
+                                      constants.OFF_SCREEN_X,
+                                      constants.OFF_SCREEN_Y)
+        alien.append(a_single_alien)
+    show_alien()
+
+    game = stage.Stage(ugame.display, constants.FPS)
+    game.layers = aliens + lasers + [ship] + [background]
+    game.rend_block()
     # repeat forever, game loop
     while True:
         # get user input
@@ -229,6 +246,14 @@ def game_scene():
                     lasers[laser_number].move(constants.OFF_SCREEN_X,
                                              constants.OFF_SCREEN_Y)
 
+        for alien_number in range(len(aliens)):
+            if aliens[alien_number].x > 0:
+                aliens[alien_number].move(alien[alien_number].x,
+                                         aliens[alien_number].y + 
+                                           constants.LASER_SPEED)
+                if lasers[alien_number].y > constants.OFF_TOP_SCREEN:
+                    lasers[alien_number].move(constants.OFF_SCREEN_X,
+                                             constants.OFF_SCREEN_Y)
         # redraw Sprites
         game.render_sprites(lasers + [ship] + [alien])
         game.tick()  # wait until refresh rate finishes

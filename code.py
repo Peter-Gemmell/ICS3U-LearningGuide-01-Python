@@ -128,7 +128,9 @@ def game_scene():
                                                         constants.SCREEN_X - constants.SPRITE_SIZE),
                                           constants.OFF_TOP_SCREEN)
                 break
-                                          
+
+    score = 0
+
     # image banks
     image_bank_background = stage.Bank.from_bmp16("space_aliens_background.bmp")
     image_bank_sprites = stage.Bank.from_bmp16("space_aliens.bmp")
@@ -243,6 +245,22 @@ def game_scene():
                     aliens[alien_number].move(constants.OFF_SCREEN_X,
                                              constants.OFF_SCREEN_Y)
                     show_alien()
+
+        for laser_number in range(len(lasers)):
+            if lasers[laser_number].x > 0:
+                for alien_number in range(len(aliens)):
+                    if aliens[alien_number].x > 0:
+                        if stage.collide(lasers[laser_number].x + 6, lasers[laser_number].y + 2
+                                         lasers[laser_number].x + 11, lasers[laser_number].y + 12
+                                         aliens[alien_number].x + 1, aliens[alien_number].y,
+                                         aliens[alien_number].x + 15, aliens[alien_number].y + 15):
+                             aliens[alien_number].move(constants.OFF_SCREEN_X, constants.OFF_SCREEN_Y)
+                             lasers[laser_number].move(constants.OFF_SCREEN_X, constants.OFF_SCREEN_Y)
+                             sound.stop()
+                             sound.play(boom_sound)
+                             show_alien()
+                             show_alien()
+                             score = score + 1
         # redraw Sprites
         game.render_sprites(aliens + lasers + [ship])
         game.tick()  # wait until refresh rate finishes

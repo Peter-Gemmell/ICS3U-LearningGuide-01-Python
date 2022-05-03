@@ -122,12 +122,12 @@ def menu_scene():
 def game_scene():
     # this function is the main game game_scene
 
-    score = 0 
+    score = 0
 
-    score_text = stage.Text(width =29, height = 14)
+    score_text = stage.Text(width=29, height=14)
     score_text.clear()
-    score_text.cursor(0,0)
-    score_text.move(1,1)
+    score_text.cursor(0, 0)
+    score_text.move(1, 1)
     score_text.text("Score: {0}".format(score))
 
     def show_alien():
@@ -268,11 +268,11 @@ def game_scene():
                     )
                     show_alien()
                     score -= 1
-                    if score < 0 :
+                    if score < 0:
                         score = 0
                     score_text.clear()
-                    score_text.cursor(0,0)
-                    score_text.move(1,1)
+                    score_text.cursor(0, 0)
+                    score_text.move(1, 1)
                     score_text.text("Score: {0}".format(score))
 
         for laser_number in range(len(lasers)):
@@ -301,8 +301,8 @@ def game_scene():
                             show_alien()
                             score = score + 1
                             score_text.clear()
-                            score_text.cursor(0,0)
-                            score_text.move(1,1)
+                            score_text.cursor(0, 0)
+                            score_text.move(1, 1)
                             score_text.text("Score: {0}".format(score))
 
         # redraw Sprites

@@ -164,6 +164,11 @@ def game_scene():
     sound.stop()
     sound.mute(False)
 
+    crash_sound = open("crash.wav", "rb")
+    sound = ugame.audio
+    sound.stop()
+    sound.mute(False)
+
     # sets the background, 10x8
     background = stage.Grid(image_bank_background, 10, 8)
 
